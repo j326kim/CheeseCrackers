@@ -50,9 +50,6 @@ angles = NaN(1,length(xfinal));
 
 for i = 2:1:length(xfinal)
     angles(i) = atan( (xfinal(i)-xfinal(i-1)) / (yfinal(i)-yfinal(i-1)));
-    if angles(i) < 0
-        angles(i) = pi + angles(i);
-    end
 end
 
 %make width and thinkness matrix
@@ -74,12 +71,14 @@ for i = indexcenternode+1:1:length(xfinal)
     thickness(i) = 0.5 - thicknessincrement * (i - indexcenternode - 1);
 end
 
-f = figure('color','white');
 bow=zeros(length(xfinal)-1,1);
-axis equal, axis off
-ylim([-1000 1000]);
-xlim([-1000 1000]);
+
 for i=1:(length(xfinal)-1)
-    bow(i,1)=line(xfinal(1,i:i+1),yfinal(1,i:i+1),'color','blue','LineWidth',thickness(i+1)*10);
+    bow(i,1)=line(xfinal(1,i:i+1),yfinal(1,i:i+1),'color','blue','LineWidth',thickness(i+1));
 end
 
+
+
+scatter(xfinal,yfinal)
+axis equal
+set(gca, 'xlim', [-20 1000], 'ylim', [-1000 1000])
