@@ -17,7 +17,7 @@ while i < length(x) -1
 %   if linelength > 0.0274
 %       pause
 %   end
-    if linelength  >  0.0274    %0.1655
+    if linelength  >  0.0274*100    %0.1655
         xfinal(n) = x(i);
         yfinal(n) = y(i);
         n = n +1;
