@@ -50,6 +50,9 @@ angles = NaN(1,length(xfinal));
 
 for i = 2:1:length(xfinal)
     angles(i) = atan( (xfinal(i)-xfinal(i-1)) / (yfinal(i)-yfinal(i-1)));
+    if angles(i) < 0
+        angles(i) = pi + angles(i);
+    end
 end
 
 %make width and thinkness matrix
