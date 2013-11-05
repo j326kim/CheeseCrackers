@@ -61,14 +61,10 @@ end
 width = 2;
 
 thickness = NaN(1,length(xfinal));
-thicknessincrement = (0.25) / ( (length(xfinal) - 1 ) / 2 - 1 );
+thicknessincrement = (floor(length(yfinal)/2);
 
-for i = 2:1:indexcenternode
-    thickness(i) = 0.25 + thicknessincrement * (i-2);
-end
-
-for i = indexcenternode+1:1:length(xfinal)
-    thickness(i) = 0.5 - thicknessincrement * (i - indexcenternode - 1);
+for i = 2:1:length(xfinal)
+    thickness(i) = ;
 end
 
 scatter(xfinal,yfinal)
