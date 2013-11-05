@@ -79,6 +79,8 @@ bow=zeros(length(xfinal)-1,1);
 axis equal, axis off
 ylim([-1000 1000]);
 xlim([-1000 1000]);
+
+%thickness is multiplied by ten so that the change in thickness is apparent
 for i=1:(length(xfinal)-1)
     bow(i,1)=line(xfinal(1,i:i+1),yfinal(1,i:i+1),'color','blue','LineWidth',thickness(i+1)*10);
 end
