@@ -1,11 +1,11 @@
 %A - square matrix
 %B - Output matrix
 %iteration - number to times to iterate
-function result = seidelSolver(A,B,iteration)
-    loopVector = ones(size(B)); %Initial guess - can be anything ?
-    loopVector(2,1) = 0;
+function result = seidelSolver(A,U,B)
+    loopVector = U; %Initial guess - can be anything ?
     iterationVector = loopVector; % Copy of loop vector (for convergence)
-    for i=1:1:iteration % More iteration = better approximation
+    counter = 0;
+    while(true) % More iteration = better approximation
         for j=1:1:length(A) % Number of rows or columns of square A matrix
             sumInEachRow = 0;
             for k=1:1:length(loopVector) %Loop through number of columns
@@ -30,9 +30,14 @@ function result = seidelSolver(A,B,iteration)
                 maximumError = error;
             end
         end
-        fprintf('Max Error for iteration %i: %f\n', i, maximumError);
-        %Make current copy, the previous copy vector
-        iterationVector = loopVector;
+        counter = counter + 1;
+        fprintf('Max Error for iteration %i: %f\n', counter, maximumError);
+        if (abs(maximumError) < 1)
+            break; %break out of while loop
+        else
+           %Make current copy, the previous copy vector
+           iterationVector = loopVector; 
+        end
     end
     %transfer loopVector to result then return output of the function
     result = loopVector;
