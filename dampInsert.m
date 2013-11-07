@@ -1,4 +1,4 @@
-function damping = dampInsert(Global,angle,L,A,Node1,Node2)
+function G_C = dampInsert(Global,angle,L,A,Node1,Node2)
 
     %create local matrix
     C=floor(cos(angle)*10^10)/10^10;
@@ -20,5 +20,5 @@ function damping = dampInsert(Global,angle,L,A,Node1,Node2)
        Ce = 1.18125 * L * A;
        Global = Global*Ce;
     end
-    damping = Global; 
+    G_C = Global;
 end
