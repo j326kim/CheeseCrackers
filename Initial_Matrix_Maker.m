@@ -79,7 +79,7 @@ if yfinal(indexcenternode) ~= 0
     error('Error with thinkness function')
 end
 
-width = 0.04445;%1.75in
+w = xlsread('InputFile', 1, 'B6'); %Width of wood (Constant)
 
 thickness = NaN(1,length(xfinal));
 thicknessincrement = (0.0127) / ( (length(xfinal) - 1 ) / 2 - 1 );
