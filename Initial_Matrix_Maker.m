@@ -95,12 +95,12 @@ end
 f = figure('color','white');
 bow=zeros(length(xfinal)-1,1);
 axis equal, axis off
-ylim([-1000 1000]);
-xlim([-1000 1000]);
+ylim([-1 1]);
+xlim([-1 1]);
 
 %thickness is multiplied by ten so that the change in thickness is apparent
 for i=1:(length(xfinal)-1)
-    bow(i,1)=line(xfinal(1,i:i+1),yfinal(1,i:i+1),'color','blue','LineWidth',thickness(i+1)*10);
+    bow(i,1)=line(xfinal(1,i:i+1),yfinal(1,i:i+1),'color','blue','LineWidth',thickness(i+1)*100);
 end
 
 %Gauss Seidel: Input Parameters - Mass Matrix, stiffness matrix, damping matrix, U0 - Initial Guess 0
