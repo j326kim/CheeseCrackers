@@ -56,11 +56,13 @@ stringy(2) = 0;
 stringy(3) = yfinal(length(yfinal));
 
 %angle
-for i = 2:1:3
-    stringangle(i) = atan((stringy(i)-stringy(i-1)) ./ (stringx(i)-stringx(i-1)));
-    if stringangle(i) < 0
-        stringangle(i) = pi + stringangle(i);
-    end
+stringangle(2) = atan((stringy(2)-stringy(1)) ./ (stringx(2)-stringx(1)));
+if stringangle(2) < 0
+    stringangle(2) = pi + stringangle(2);
+end
+    stringangle(3) = atan((stringy(2)-stringy(3)) ./ (stringx(3)-stringx(2)));
+if stringangle(3) < 0
+    stringangle(3) = pi + stringangle(3);
 end
 
 % ---------------- element x composed of node x and node x-1 -------------%
