@@ -32,17 +32,23 @@ Fap = 0:Fslope*dt:Flim;
 while failure == 0 && Fap(1,count+1) ~= Flim
     % Making Global matrices
     if count > 0
-        for i = 1:length(xfinal(1,:))
-            xfinal(1,i) = xfinal(1,i) + U(3*i-2,1);
-            XAni(i,count+1) = xfinal(1,i);
-            yfinal(1,i) = yfinal(1,i) + U(3*i-1,1);
-            YAni(i,count+1) = yfinal(1,i);
+        for i = 1:(length(xfinal(1,:))-1)
+            while i < indexcenternode
+                xfinal(1,i) = xfinal(1,i) + U(3*i-2,1);
+                XAni(i,count+1) = xfinal(1,i);
+                yfinal(1,i) = yfinal(1,i) + U(3*i-1,1);
+                YAni(i,count+1) = yfinal(1,i);
+            end
+            xfinal(1,i+3) = xfinal(1,i) + U(3*i-2,1);
+            XAni(i,count+1) = xfinal(1,i+3);
+            yfinal(1,i+3) = yfinal(1,i) + U(3*i-1,1);
+            YAni(i,count+1) = yfinal(1,i+3);
         end
         stringx(1, 1) = stringx(1, 1) + U(3*i+1,1);
         XAni(i+1,count+1) = stringx(1, 1);
         stringy(1, 1) = stringy(1, 1) + U(3*i+2,1);
         YAni(i+1,count+1) = stringy(1, 1);
-        F(3*i-2,1) = Fap(1, count);
+        F(3*i+1,1) = Fap(1, count);
     end
     
     %update position of string
