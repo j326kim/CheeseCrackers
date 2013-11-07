@@ -12,6 +12,7 @@ w = xlsread('InputFile', 1, 'B6'); %Width of wood (Constant)
 stringMass = xlsread('InputFile', 1, 'H4'); % Mass of the string 
 stringE = xlsread('InputFile', 1, 'H2'); %String modulus of elasticity
 stringL = xlsread('InputFile', 1, 'H6'); %String length
+stringR = xlsread('InputFile', 1, 'H8'); %String Radius
 thicknessStart = xlsread('InputFile', 1, 'C2');
 thicknessEnd = xlsread('InputFile', 1, 'D2');
 failure = 0; %Failure flag; if failure condition is reached, set to 1
