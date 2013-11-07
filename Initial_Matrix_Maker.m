@@ -59,17 +59,17 @@ if yfinal(indexcenternode) ~= 0
     error('Error with thinkness function')
 end
 
-width = 2;
+width = 0.04445;%1.75in
 
 thickness = NaN(1,length(xfinal));
-thicknessincrement = (0.25) / ( (length(xfinal) - 1 ) / 2 - 1 );
+thicknessincrement = (0.0127) / ( (length(xfinal) - 1 ) / 2 - 1 );
 
 for i = 2:1:indexcenternode
-    thickness(i) = 0.25 + thicknessincrement * (i-2);
+    thickness(i) = 0.00635 + thicknessincrement * (i-2);
 end
 
 for i = indexcenternode+1:1:length(xfinal)
-    thickness(i) = 0.5 - thicknessincrement * (i - indexcenternode - 1);
+    thickness(i) = 0.01905 - thicknessincrement * (i - indexcenternode - 1);
 end
 
 f = figure('color','white');
