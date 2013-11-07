@@ -45,6 +45,23 @@ while failure == 0 && Fap(1,count+1) ~= Flim
         F(3*i-2,1) = Fap(1, count);
     end
     
+    %update position of string
+    stringx(1) = xfinal(1);
+    stringx(2) = xfinal(1);
+    stringx(3) = xfinal(1);
+    stringy(1) = yfinal(1);
+    stringy(3) = yfinal(length(yfinal));
+
+    %update angle
+    stringangle(2) = atan((stringy(2)-stringy(1)) ./ (stringx(2)-stringx(1)));
+    if stringangle(2) < 0
+    stringangle(2) = pi + stringangle(2);
+    end
+    %Node n and Node N+1
+    stringangle(3) = atan((stringy(2)-stringy(3)) ./ (stringx(3)-stringx(2)));
+    stringangle(3) = 2*pi + stringangle(3); %string is in the fourth quadrant of the cartesian plane
+
+    
     ElementVec; % Makes a vector, elementVec(), with element lengths.
     CoefMaker; 
     [G_K,G_C,G_M,U,Uplus,Uminus,F]= Sparse(G_K,G_C,G_M,U,Uplus,Uminus,F,indexcenternode);
