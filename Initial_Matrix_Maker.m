@@ -83,6 +83,10 @@ for i=1:(length(xfinal)-1)
     bow(i,1)=line(xfinal(1,i:i+1),yfinal(1,i:i+1),'color','blue','LineWidth',thickness(i+1)*10);
 end
 
+%Gauss Seidel: Input Parameters - Mass Matrix, stiffness matrix, damping matrix, U0 - Initial Guess 0
+%U1 - Initial Guess 1, Two initial guess (see formula sheet), dt - time step, fap - Applied Force Vector
+seidelSolver(MassMat,stiffnessMat,DampingMat,U0,U1,dt,Fap)
+
 %Call animation function - two matrices will be inputed
 %Animation(setOfFinalXPos,setOfFinalYPos);
 
