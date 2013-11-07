@@ -4,10 +4,7 @@ function [G_K,local] = MatInsert(Global,angle,E,L,A,I,Node1,Node2)
     %E(Pa),L(m),A(m^2),I(m^4),angle(rads)
     %Global is the global stiffness matrix and Node1 and Node2 are the node
     %numbers
-    
-    if Node1==Node2
-        ok=0;
-    else
+
         %   create local matrix
         C=floor(cos(angle)*10^10)/10^10;
         S=floor(sin(angle)*10^10)/10^10;
@@ -32,6 +29,5 @@ function [G_K,local] = MatInsert(Global,angle,E,L,A,I,Node1,Node2)
         Global(Node2:Node2+3-1,Node1:Node1+3-1)= local(1:3,4:6);
         Global(Node1:Node1+3-1,Node2:Node2+3-1)= local(4:6,1:3);
         G_K=Global;
-    end
 end
 
