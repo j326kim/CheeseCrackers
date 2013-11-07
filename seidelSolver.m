@@ -1,8 +1,14 @@
 %A - square matrix
 %B - Output matrix
 %iteration - number to times to iterate
-function result = seidelSolver(A,U,B)
-    loopVector = U; %Initial guess - can be anything ?
+function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
+        ,U0,U1,dt,Fap)
+    
+    G1 = ( stiffnessMat - 2 * MassMat / (dt^2) ) * U1;
+    G2 = ( MassMat / dt^2 - DampingMat / (2*dt) ) * U0; 
+    A = MassMat / (dt^2) + DampingMat / (2*dt);
+    
+    loopVector = U0; %Initial guess - can be anything ?
     iterationVector = loopVector; % Copy of loop vector (for convergence)
     counter = 0;
     while(true) % More iteration = better approximation
@@ -17,6 +23,13 @@ function result = seidelSolver(A,U,B)
             %May need convergence check here...
             %%%%-----------Convergence Check---------------%%%%
             %Update the loop vector for further calculation
+            if ( (j - 1) >= 2)
+                B = Fap(j,1) + G1(j,1) + G2(j,1);
+            elseif ( (j - 1) >= 1)
+                B = Fap(j,1) + G1(j,1) + 0;
+            else
+                B = Fap(j,1);
+            end
             loopVector(j,1) = (B(j,1) - sumInEachRow)/A(j,j);
         end
         %Convergence Test (Only to see if it is diverging or not
@@ -32,7 +45,7 @@ function result = seidelSolver(A,U,B)
         end
         counter = counter + 1;
         fprintf('Max Error for iteration %i: %f\n', counter, maximumError);
-        if (abs(maximumError) < 1)
+        if (abs(maximumError) < 1) %change the value here to adjust precision
             break; %break out of while loop
         else
            %Make current copy, the previous copy vector
@@ -40,5 +53,5 @@ function result = seidelSolver(A,U,B)
         end
     end
     %transfer loopVector to result then return output of the function
-    result = loopVector;
+    result = loopVector; % <-- U(i+1)
 end
