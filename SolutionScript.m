@@ -65,6 +65,9 @@ while failure == 0 && Fap(1,count+1) ~= Flim
 %     %Check for failure
 %     failure = IsBroken;
 %  
-%     count = count + 1;
-      failure = 1; %remove once IsBroken is done
+
+      count = count + 1;
+      if count> 20
+        failure = 1; %remove once IsBroken is done
+      end
 end

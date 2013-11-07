@@ -34,8 +34,8 @@ xfinal = horzcat(fliplr(xfinal(:,2:length(xfinal))),xfinal);
 
 
 %put it in meters
-xfinal = xfinal.*10;
-yfinal = yfinal.*10;
+xfinal = xfinal.*100;
+yfinal = yfinal.*100;
 
 %final values
 %x=173.0785
