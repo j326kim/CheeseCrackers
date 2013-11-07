@@ -14,7 +14,7 @@ function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
             G1 = ( stiffnessMat - 2 * MassMat / (dt^2) ) * loopVector;
             G2 = ( MassMat / dt^2 - DampingMat / (2*dt) ) * prevVector; 
             A = MassMat / (dt^2) + DampingMat / (2*dt);
-            B = zeros(length(Fap));
+            B = zeros(length(Fap),1);
             prevVector = loopVector;
             
             sumInEachRow = 0;
@@ -43,7 +43,9 @@ function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
         for d=1:1:length(iterationVector)
             error = (( loopVector(d,1) - iterationVector(d,1) ) ...
                 / loopVector(d,1)) * 100;
-            if (error > maximumError)
+            if (isnan(error))
+                maximumError = 0;
+            elseif (error > maximumError)
                 maximumError = error;
             end
         end
