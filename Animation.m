@@ -1,7 +1,5 @@
-function [] = Animation()
-    
-    setOfFinalX = rand(93,1000);
-    setOfFinalY = rand(93,1000);
+function [] = Animation(setOfFinalXBow,setOfFinalYBow, ...
+setOfFinalXString, setOfFinalYString)
 
     figure('color','white');
     title('Bow and Arrow!','Color',[.6 0 0])
@@ -9,15 +7,16 @@ function [] = Animation()
     ylim([-1000 1000]);
     xlim([-1000 1000])
     
-    numOfLoop = length(setOfFinalX);
+    numOfLoop = length(setOfFinalXBow);
     for j=1:1:numOfLoop
-        vectorX = setOfFinalX(:,j);
-        vectorY = setOfFinalY(:,j);
+        vectorXBow = setOfFinalXBow(:,j);
+        vectorYBow = setOfFinalYBow(:,j);
+        vectorXString = setOfFinalXString(:,j);
+        vectorYString = setOfFinalYString(:,j);
         pause(0.1);
         figure(1)
-        plot(vectorX,vectorY,'color','blue','LineWidth',4);
+        plot(vectorXBow,vectorYBow,'color','blue','LineWidth',4);
+        plot(vectorXString,vectorYString,'color','red','LineWidth',2);
         drawnow 
     end
 end
-
-
