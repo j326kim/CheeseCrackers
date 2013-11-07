@@ -3,16 +3,20 @@
 %iteration - number to times to iterate
 function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
         ,U0,U1,dt,Fap)
-    
-    G1 = ( stiffnessMat - 2 * MassMat / (dt^2) ) * U1;
-    G2 = ( MassMat / dt^2 - DampingMat / (2*dt) ) * U0; 
-    A = MassMat / (dt^2) + DampingMat / (2*dt);
-    
-    loopVector = U0; %Initial guess - can be anything ?
+
+    loopVector = U1; %Initial guess - can be anything ?
+    prevVector = U0;
     iterationVector = loopVector; % Copy of loop vector (for convergence)
     counter = 0;
     while(true) % More iteration = better approximation
-        for j=1:1:length(A) % Number of rows or columns of square A matrix
+        for j=1:1:length(MassMat) % Number of rows or columns of square A matrix
+
+            G1 = ( stiffnessMat - 2 * MassMat / (dt^2) ) * loopVector;
+            G2 = ( MassMat / dt^2 - DampingMat / (2*dt) ) * prevVector; 
+            A = MassMat / (dt^2) + DampingMat / (2*dt);
+            B = zeros(length(Fap));
+            prevVector = loopVector;
+            
             sumInEachRow = 0;
             for k=1:1:length(loopVector) %Loop through number of columns
                 if (k ~= j)
@@ -24,11 +28,11 @@ function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
             %%%%-----------Convergence Check---------------%%%%
             %Update the loop vector for further calculation
             if ( (j - 1) >= 2)
-                B = Fap(j,1) + G1(j,1) + G2(j,1);
+                B(j,1) = Fap(j,1) + G1(j,1) + G2(j,1);
             elseif ( (j - 1) >= 1)
-                B = Fap(j,1) + G1(j,1) + 0;
+                B(j,1) = Fap(j,1) + G1(j,1) + 0;
             else
-                B = Fap(j,1);
+                B(j,1) = Fap(j,1);
             end
             loopVector(j,1) = (B(j,1) - sumInEachRow)/A(j,j);
         end
