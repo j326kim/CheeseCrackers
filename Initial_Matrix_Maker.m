@@ -44,10 +44,29 @@ yfinal = yfinal.*10;
 %angle matrix
 angles = NaN(1,length(xfinal));
 
-% ---------------- element x composed of node x and node x-1 -------------%
+stringx = zeros(1,3);
+stringy = zeros(1,3);
+stringangle = zeros(1,3);
 
+stringx(1) = xfinal(1);
+stringx(2) = xfinal(1);
+stringx(3) = xfinal(1);
+stringy(1) = yfinal(1);
+stringy(2) = 0;
+stringy(3) = yfinal(length(yfinal));
+
+%angle
+for i = 2:1:3
+    stringangle(i) = atan((stringy(i)-stringy(i-1)) ./ (stringx(i)-stringx(i-1)));
+    if stringangle(i) < 0
+        stringangle(i) = pi + stringangle(i);
+    end
+end
+
+% ---------------- element x composed of node x and node x-1 -------------%
+%angle
 for i = 2:1:length(xfinal)
-    angles(i) = atan( (xfinal(i)-xfinal(i-1)) / (yfinal(i)-yfinal(i-1)));
+    angles(i) = atan( (yfinal(i)-yfinal(i-1)) / (xfinal(i)-xfinal(i-1)));
     if angles(i) < 0
         angles(i) = pi + angles(i);
     end
