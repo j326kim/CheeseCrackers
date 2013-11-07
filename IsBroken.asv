@@ -1,4 +1,4 @@
-function [ broken ] = IsBroken( Keff, U, angles, length, thickness)
+function [ broken ] = IsBroken( Keff, U, angles, length)
     %string_a(2) %%angle from node 2 to 1
     %length is number of nodes on bow
     %U is global displacement
@@ -18,9 +18,7 @@ function [ broken ] = IsBroken( Keff, U, angles, length, thickness)
 
     end
     
-    sigma = zeros((length-1)*3);
-    area  = thickness * 0.0508;
-    sigma = flocal ./ area;
+    sigma1 = 
     
     
 
