@@ -83,3 +83,6 @@ for i=1:(length(xfinal)-1)
     bow(i,1)=line(xfinal(1,i:i+1),yfinal(1,i:i+1),'color','blue','LineWidth',thickness(i+1)*10);
 end
 
+%Call animation function - two matrices will be inputed
+%Animation(setOfFinalXPos,setOfFinalYPos);
+
