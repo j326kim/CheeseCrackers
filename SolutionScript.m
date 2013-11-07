@@ -19,10 +19,10 @@ count = 0; %Number of iterations the while loop has gone through.
 
 %Initial setup; creates xfinal(), yfinal(), angles(), thickness()
 Initial_Matrix_Maker;
-U = zeros(3*(length(xfinal(1,:)+1)),1); %Change the hard-coded value to (length(Global),1))
-Uplus = zeros(3*(length(xfinal(1,:)+1)),1);
-Uminus = zeros(3*(length(xfinal(1,:)+1)),1);
-F = zeros(3*(length(xfinal(1,:)+1)),1);
+U = zeros(3*(length(xfinal(1,:))+1),1); %Change the hard-coded value to (length(Global),1))
+Uplus = zeros(3*(length(xfinal(1,:))+1),1);
+Uminus = zeros(3*(length(xfinal(1,:))+1),1);
+F = zeros(3*(length(xfinal(1,:))+1),1);
 XAni = zeros(length(xfinal(1,:))+1, Flim); %X animation matrix
 YAni = zeros(length(xfinal(1,:))+1, Flim); %Y animation matrix
 
