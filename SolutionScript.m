@@ -29,7 +29,7 @@ YAni = zeros(length(xfinal(1,:)+1), Flim); %Y animation matrix
 %force input vector
 Fap = 0:Fslope*dt:Flim; 
 
-while failure == 0 && Fap(1,count+1) ~= Flim
+while failure == 0 || Fap(1,count+1) ~= Flim
     % Making Global matrices
     if count > 0
         for i = 1:length(xfinal(1,:))
