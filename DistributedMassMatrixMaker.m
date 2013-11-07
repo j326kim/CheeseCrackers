@@ -1,4 +1,4 @@
-function [ G_M ] = Untitled4(G_M,Node1,Node2,row,A,L)
+function [ G_M ] = DistributedMassMatrixMaker(G_M,Node1,Node2,row,A,L)
 %UNTITLED4 Summary of this function goes here
 
 %   Detailed explanation goes here
