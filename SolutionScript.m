@@ -33,7 +33,7 @@ while failure == 0 && Fap(1,count+1) ~= Flim
     % Making Global matrices
     if count > 0
         for i = 1:(length(xfinal(1,:))-1)
-            while i < indexcenternode
+            if i < indexcenternode
                 xfinal(1,i) = xfinal(1,i) + U(3*i-2,1);
                 XAni(i,count+1) = xfinal(1,i);
                 yfinal(1,i) = yfinal(1,i) + U(3*i-1,1);
@@ -90,7 +90,7 @@ while failure == 0 && Fap(1,count+1) ~= Flim
 %  
 
       count = count + 1;
-      if count> 20
+      if count> 2
         failure = 1; %remove once IsBroken is done
       end
 end
