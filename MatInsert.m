@@ -1,4 +1,4 @@
-function [G_K,ok] = MatInsert(Global,angle,E,L,A,I,Node1,Node2)
+function [G_K,ok,local] = MatInsert(Global,angle,E,L,A,I,Node1,Node2)
 
 %   Detailed explanation goes here
     %E(Pa),L(m),A(m^2),I(m^4),angle(rads)
