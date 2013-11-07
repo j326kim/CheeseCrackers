@@ -44,18 +44,23 @@ function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
             error = (( loopVector(d,1) - iterationVector(d,1) ) ...
                 / loopVector(d,1)) * 100;
             if (isnan(error))
-                maximumError = 0;
+                continue;
             elseif (error > maximumError)
                 maximumError = error;
             end
         end
         counter = counter + 1;
-        fprintf('Max Error for iteration %i: %f\n', counter, maximumError);
-        if (abs(maximumError) < 1) %change the value here to adjust precision
-            break; %break out of while loop
+        if (maximumError < 0)
+            fprintf('Max Error for iteration %i: NaN\n', counter);
+            iterationVector = loopVector;
         else
-           %Make current copy, the previous copy vector
-           iterationVector = loopVector; 
+           fprintf('Max Error for iteration %i: %f\n', counter, maximumError);
+           if (abs(maximumError) < 1) %change the value here to adjust precision
+                break; %break out of while loop
+           else
+               %Make current copy, the previous copy vector
+               iterationVector = loopVector; 
+           end
         end
     end
     %transfer loopVector to result then return output of the function
