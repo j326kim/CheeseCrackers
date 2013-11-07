@@ -7,10 +7,10 @@ Icircle=pi* (stringD/2)^4 / 4;
 l=stringL; %last element in yfinal vector is half the length of the string
 A=pi*(stringD/2)^2;
 
-[G_K, KeffMatrices(:,:,1)] = MatInsert(G_K,stringangle(2),stringE,l,A,Icircle,1,length(yfinal)+1); %Node 1 to Node 90
-[G_K, KeffMatrices(:,:,length(yfinal)+1)] = MatInsert(G_K,stringangle(3),stringE,l,A,Icircle,length(yfinal),length(yfinal)+1); %Node 89 to Node 90
-G_C = dampInsert(G_C,stringangle(2),l,A,1,length(yfinal)+1);
-G_C = dampInsert(G_C,stringangle(2),l,A,length(yfinal),length(yfinal)+1);
+[G_K, KeffMatrices(:,:,1)] = MatInsert(G_K,stringangle(2),stringE,l,A,Icircle,1,length(yfinal)+1); %Node 1 to Node N+1
+[G_K, KeffMatrices(:,:,length(yfinal)+1)] = MatInsert(G_K,stringangle(3),stringE,l,A,Icircle,length(yfinal)+1,length(yfinal)); %Node N+1 to Node N
+G_C = dampInsert(G_C,stringangle(2),l,A,1,length(yfinal)+1); %Node 1 and Node N+1
+G_C = dampInsert(G_C,stringangle(3),l,A,length(yfinal)+1,length(yfinal)); %Node N+1 and Node N
 
 %manual insertion of point masses of string into mass matrix
 Imass=0.5*stringMass*(1.5875/2)^2;
