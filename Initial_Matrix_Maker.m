@@ -34,8 +34,8 @@ xfinal = horzcat(fliplr(xfinal(:,2:length(xfinal))),xfinal);
 
 
 %put it in meters
-xfinal = xfinal.*10;
-yfinal = yfinal.*10;
+xfinal = xfinal/100;
+yfinal = yfinal/100;
 
 %final values
 %x=173.0785
@@ -56,14 +56,15 @@ stringy(2) = 0;
 stringy(3) = yfinal(length(yfinal));
 
 %angle
+%angle
 stringangle(2) = atan((stringy(2)-stringy(1)) ./ (stringx(2)-stringx(1)));
 if stringangle(2) < 0
     stringangle(2) = pi + stringangle(2);
 end
-    stringangle(3) = atan((stringy(2)-stringy(3)) ./ (stringx(3)-stringx(2)));
-if stringangle(3) < 0
-    stringangle(3) = pi + stringangle(3);
-end
+%Node n and Node N+1
+stringangle(3) = atan((stringy(2)-stringy(3)) ./ (stringx(3)-stringx(2)));
+stringangle(3) = 2*pi + stringangle(3); %string is in the fourth quadrant of the cartesian plane
+
 
 % ---------------- element x composed of node x and node x-1 -------------%
 %angle
