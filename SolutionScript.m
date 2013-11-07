@@ -56,15 +56,15 @@ while failure == 0 || Fap(1,count+1) ~= Flim
 %     
 %     %make force vector
 %     B =  G1 + G2 + F;
-    
-    %Solve for Uplus
-    Uplus = seidelSolver(G_M,G_K,G_C,Uminus,U,dt,F);
-    Uminus = U;
-    U = Uplus; 
-    
-    %Check for failure
-    failure = IsBroken;
- 
-    count = count + 1;
-    failure = 1;
+%     
+%     %Solve for Uplus
+%     Uplus = seidelSolver(G_M,G_K,G_C,Uminus,U,dt,F);
+%     Uminus = U;
+%     U = Uplus; 
+%     
+%     %Check for failure
+%     failure = IsBroken;
+%  
+%     count = count + 1;
+      failure = 1; %remove once IsBroken is done
 end
