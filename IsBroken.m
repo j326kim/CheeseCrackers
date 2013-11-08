@@ -21,7 +21,7 @@ function [ broken ] = IsBroken( Keff, U, angles, length, thickness, width, maxte
     end
     
     
-    %stress along axis
+    %stress along x-axis
     sigma = zeros(length-1);
     %assume constant per element, avoid unnecessary use of poissons ratio
     area  = thickness * 0.0508; 
@@ -35,14 +35,6 @@ function [ broken ] = IsBroken( Keff, U, angles, length, thickness, width, maxte
             sigma(i) = - sigma(i);
         end
     end   
-
-    %moments
-    sigma = zeros(length-1);
-    %assume constant per element, avoid unnecessary use of poissons ratio
-    area  = thickness * 0.0508; 
-    for i = 1:(length-1)
-        sigma(i) = flocal(1+3*(i-1)) ./ area(i);
-    end    
     
     %principle stresses
     Y = zeros(length-1);
@@ -62,7 +54,7 @@ function [ broken ] = IsBroken( Keff, U, angles, length, thickness, width, maxte
     
     for i = 1:(length-1)
         sigmamax(i) = sigma(i) + flocal(3*i)*Y(i)/I(i);
-        if sigmamax> maxtension
+        if sigmamax(i)> maxtension
             broken = 1;
         end
     end
@@ -71,7 +63,7 @@ function [ broken ] = IsBroken( Keff, U, angles, length, thickness, width, maxte
     
     for i = 1:(length-1)
         sigmamin(i) = sigma(i) - flocal(3*i)*Y(i)/I(i);
-        if sigmamin < -maxcompression
+        if sigmamin(i) < -maxcompression
             broken = 1;
         end
     end
