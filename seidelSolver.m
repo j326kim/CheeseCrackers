@@ -8,7 +8,7 @@ function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
     G1 = ( stiffnessMat - 2 * MassMat / (dt^2) ) * U1;
     G2 = ( MassMat / dt^2 - DampingMat / (2*dt) ) * U0;
     A = MassMat / (dt^2) + DampingMat / (2*dt);
-    
+    B = B+G1+G2;
     iterationVector = loopVector; % Copy of loop vector (for convergence)
     counter = 0;
     while(true) % More iteration = better approximation
