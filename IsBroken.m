@@ -2,6 +2,7 @@ function [ broken ] = IsBroken( Keff, U, angles, length, thickness, width, maxte
     %string_a(2) %%angle from node 2 to 1
     %length is number of nodes on bow
     %U is global displacement
+    broken=0; %0 means not broken
     flocal = zeros((length-1)*3,1);
 
     for i = 1:3:(length-1)*3
@@ -60,7 +61,7 @@ function [ broken ] = IsBroken( Keff, U, angles, length, thickness, width, maxte
     sigmamax = zeros(length-1);
     
     for i = 1:(length-1)
-        sigmamax(i) = sigma(i) + flocal(6*i)*Y(i)/I(i);
+        sigmamax(i) = sigma(i) + flocal(3*i)*Y(i)/I(i);
         if sigmamax> maxtension
             broken = 1;
         end
@@ -69,7 +70,7 @@ function [ broken ] = IsBroken( Keff, U, angles, length, thickness, width, maxte
     sigmamin = zeros(length-1);
     
     for i = 1:(length-1)
-        sigmamin(i) = sigma(i) - flocal(6*i)*Y(i)/I(i);
+        sigmamin(i) = sigma(i) - flocal(3*i)*Y(i)/I(i);
         if sigmamin < -maxcompression
             broken = 1;
         end
