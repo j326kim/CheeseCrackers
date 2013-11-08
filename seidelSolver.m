@@ -2,20 +2,17 @@
 %B - Output matrix
 %iteration - number to times to iterate
 function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
-        ,U0,U1,dt,Fap)
+        ,U0,U1,dt,B)
 
-    loopVector = U1; %Initial guess - can be anything ?
-    prevVector = U0;
+    loopVector = zeros(size(U0));
+    G1 = ( stiffnessMat - 2 * MassMat / (dt^2) ) * U1;
+    G2 = ( MassMat / dt^2 - DampingMat / (2*dt) ) * U0;
+    A = MassMat / (dt^2) + DampingMat / (2*dt);
+    
     iterationVector = loopVector; % Copy of loop vector (for convergence)
     counter = 0;
     while(true) % More iteration = better approximation
-        for j=1:1:length(MassMat) % Number of rows or columns of square A matrix
-
-            G1 = ( stiffnessMat - 2 * MassMat / (dt^2) ) * loopVector;
-            G2 = ( MassMat / dt^2 - DampingMat / (2*dt) ) * prevVector; 
-            A = MassMat / (dt^2) + DampingMat / (2*dt);
-            B = zeros(length(Fap),1);
-            prevVector = loopVector;
+        for j=1:1:length(MassMat) % Number of rows or columns of square A matrix             
             
             sumInEachRow = 0;
             for k=1:1:length(loopVector) %Loop through number of columns
@@ -23,16 +20,6 @@ function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
                    %Calculate row sum when known values are subbed in
                    sumInEachRow = sumInEachRow + A(j,k) * loopVector(k,1);
                 end
-            end
-            %May need convergence check here...
-            %%%%-----------Convergence Check---------------%%%%
-            %Update the loop vector for further calculation
-            if ( (j - 1) >= 2)
-                B(j,1) = Fap(j,1) + G1(j,1) + G2(j,1);
-            elseif ( (j - 1) >= 1)
-                B(j,1) = Fap(j,1) + G1(j,1) + 0;
-            else
-                B(j,1) = Fap(j,1);
             end
             loopVector(j,1) = (B(j,1) - sumInEachRow)/A(j,j);
         end
@@ -51,7 +38,7 @@ function result = seidelSolver(MassMat,stiffnessMat,DampingMat ...
         end
         counter = counter + 1;
         if (maximumError < 0)
-            fprintf('Max Error for iteration %i: NaN\n', counter);
+            fprintf('Max Error for iteration %i: Diverging\n', counter);
             iterationVector = loopVector;
         else
            fprintf('Max Error for iteration %i: %f\n', counter, maximumError);
