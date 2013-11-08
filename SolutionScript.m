@@ -45,16 +45,15 @@ CoefMaker;
 %                 yfinal(1,i) = yfinal(1,i) + U(3*i-1,1);
 %                 YAni(i,count+1) = yfinal(1,i);
 %         end
-%         stringx(1, 1) = stringx(1, 1) + U(3*i+1,1);
+%         
 %         XAni(i+1,count+1) = stringx(1, 1);
-%         stringy(1, 1) = stringy(1, 1) + U(3*i+2,1);
-%         YAni(i+1,count+1) = stringy(1, 1);
+%         stringx(2) = stringx(2) + U(3*i+1,1);
+%         YAni(i+1,count+1) = stringx(1, 1);
 %         F(3*i+1,1) = Fap(1, count);
 %     end
 %     
 %     %update position of string
 %     stringx(1) = xfinal(1);
-%     stringx(2) = xfinal(1);
 %     stringx(3) = xfinal(1);
 %     stringy(1) = yfinal(1);
 %     stringy(3) = yfinal(length(yfinal));
