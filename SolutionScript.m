@@ -29,8 +29,8 @@ StringLE = 0;
 %force input vector
 Fap = 0:Fslope*dt:Flim; 
 
-    CoefMaker; 
-    [G_K,G_C,G_M,LoopU,LoopUd,LoopUdd,LoopF]= Sparse(G_K,G_C,G_M,LoopU,LoopUd,LoopUdd,LoopF,indexcenternode);
+CoefMaker; 
+[G_K,G_C,G_M,Uplus,U,Uminus,F]= Sparse(G_K,G_C,G_M,Uplus,U,Uminus,F,indexcenternode);
 
 while failure == 0 && Fap(1,count+1) ~= Flim
     % Making Global matrices
