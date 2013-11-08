@@ -14,6 +14,8 @@ stringE = xlsread('InputFile', 1, 'H2'); %String modulus of elasticity
 stringD = xlsread('InputFile', 1, 'H6'); %String Radius
 failure = 0; %Failure flag; if failure condition is reached, set to 1
 count = 0; %Number of iterations the while loop has gone through.
+maxtension = xlsread('InputFile', 1, 'B8');
+maxcompression = xlsread('InputFile', 1, 'B10');
 
 
 %Initial setup; creates xfinal(), yfinal(), angles(), thickness()
@@ -33,8 +35,9 @@ ElementVec;
 CoefMaker; 
 [G_K,G_C,G_M,Uplus,U,Uminus,F]= Sparse(G_K,G_C,G_M,Uplus,U,Uminus,F,indexcenternode);
 
-while failure == 0 || Fap(1,count+1) ~= Flim
+while failure == 0 %|| Fap(1,count+1) ~= Flim
     % Making Global matrices
+    F(3*(length(xfinal))-2,1) = F(3*(length(xfinal))-2,1) + Fap(1, count+1);
     if count > 0
         for i = 1:(length(xfinal(1,:))-1)
             if i == indexcenternode
@@ -49,8 +52,8 @@ while failure == 0 || Fap(1,count+1) ~= Flim
         XAni(i+1,count+1) = stringx(1, 1);
         stringx(2) = stringx(2) + U(3*i+1,1);
         YAni(i+1,count+1) = stringx(1, 1);
-        F(3*i+1,1) = Fap(1, count);
-    end
+        
+    
     
     %update position of string
     stringx(1) = xfinal(1);
@@ -84,25 +87,28 @@ while failure == 0 || Fap(1,count+1) ~= Flim
     clearvars LoopUdd;
     clearvars LoopF;
     
-%     %Setup to make everything in the form Ax = B
-%     A = 1/dt^2*G_M + 1/(2*dt)*G_C; 
-%     G1 = (G_K - 2/dt^2*G_M)*U;
-%     G2 = (1/dt^2*G_M - 1/(2*dt)*G_C)*Uminus;
-%     
-%     %make force vector
-%     B =  G1 + G2 + F;
+    end
+    
+    %Setup to make everything in the form Ax = B
+    A = 1/dt^2*G_M + 1/(2*dt)*G_C; 
+    G1 = (G_K - 2/dt^2*G_M)*U;
+    G2 = (1/dt^2*G_M - 1/(2*dt)*G_C)*Uminus;
+    
+    %make force vector
+    B =  G1 + G2 + F;
 %     
     %Solve for Uplus
-    Uplus = seidelSolver(G_M,G_K,G_C,Uminus,U,dt,F);
+    %Uplus = seidelSolver(G_M,G_K,G_C,Uminus,U,dt,F);
+    Uplus = inv(A)*B
     Uminus = U;
     U = Uplus; 
 %     
 %     %Check for failure
-%     failure = IsBroken;
+      failure = IsBroken( KeffMatrices, U, angles, length(xfinal), thickness, w, maxtension, maxcompression);
 %  
-
-      count = count + 1;
-      if count> 2
-        failure = 1; %remove once IsBroken is done
-      end
+% 
+%       count = count + 1;
+%       if count> 5
+%         failure = 1; %remove once IsBroken is done
+     
 end
