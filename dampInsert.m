@@ -13,10 +13,10 @@ function G_C = dampInsert(Global,angle,L,A,Node1,Node2)
     
     Node1=Node1*3-2;
     Node2=Node2*3-2;
-    Global(Node1:Node1+3-1,Node1:Node1+3-1)= temp;
-    Global(Node2:Node2+3-1,Node2:Node2+3-1)= temp;
-    Global(Node2:Node2+3-1,Node1:Node1+3-1)= -temp;
-    Global(Node1:Node1+3-1,Node2:Node2+3-1)= -temp;
+    Global(Node1:Node1+3-1,Node1:Node1+3-1)= Global(Node1:Node1+3-1,Node1:Node1+3-1) + temp;
+    Global(Node2:Node2+3-1,Node2:Node2+3-1)= Global(Node2:Node2+3-1,Node2:Node2+3-1) + temp;
+    Global(Node2:Node2+3-1,Node1:Node1+3-1)= Global(Node2:Node2+3-1,Node1:Node1+3-1) - temp;
+    Global(Node1:Node1+3-1,Node2:Node2+3-1)= Global(Node1:Node1+3-1,Node2:Node2+3-1) - temp;
     
     G_C = Global;
 end
