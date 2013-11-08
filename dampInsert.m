@@ -5,7 +5,7 @@ function G_C = dampInsert(Global,angle,L,A,Node1,Node2)
     S=floor(sin(angle)*10^10)/10^10;
     
     Cd = 1.18125 * L * A;
-    if Node1 == length(xfinal(1,:))+1 || Node2 == length(xfinal(1,:))+1
+    if Node1 == length(Global)/3 || Node2 == length(Global)/3
         Cd = 0.387864561;
     end
     
