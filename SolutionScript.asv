@@ -24,9 +24,14 @@ Uminus = zeros(3*(length(xfinal(1,:))+1),1);
 F = zeros(3*(length(xfinal(1,:))+1),1);
 XAni = zeros(length(xfinal(1,:))+1, Flim); %X animation matrix
 YAni = zeros(length(xfinal(1,:))+1, Flim); %Y animation matrix
+StringLE = 0;
 
 %force input vector
 Fap = 0:Fslope*dt:Flim; 
+
+ElementVec;
+CoefMaker; 
+[G_K,G_C,G_M,Uplus,U,Uminus,F]= Sparse(G_K,G_C,G_M,Uplus,U,Uminus,F,indexcenternode);
 
 while failure == 0 && Fap(1,count+1) ~= Flim
     % Making Global matrices
@@ -38,10 +43,10 @@ while failure == 0 && Fap(1,count+1) ~= Flim
                 yfinal(1,i) = yfinal(1,i) + U(3*i-1,1);
                 YAni(i,count+1) = yfinal(1,i);
             end
-            xfinal(1,i+3) = xfinal(1,i) + U(3*i-2,1);
-            XAni(i,count+1) = xfinal(1,i+3);
-            yfinal(1,i+3) = yfinal(1,i) + U(3*i-1,1);
-            YAni(i,count+1) = yfinal(1,i+3);
+            xfinal(1,i+1) = xfinal(1,i+1) + U(3*i-2,1);
+            XAni(i+1,count+1) = xfinal(1,i+1);
+            yfinal(1,i+1) = yfinal(1,i) + U(3*i-1,1);
+            YAni(i+1,count+1) = yfinal(1,i+3);
         end
         stringx(1, 1) = stringx(1, 1) + U(3*i+1,1);
         XAni(i+1,count+1) = stringx(1, 1);
@@ -58,27 +63,29 @@ while failure == 0 && Fap(1,count+1) ~= Flim
     stringy(3) = yfinal(length(yfinal));
 
     %update angle
-    stringangle(2) = atan((stringy(2)-stringy(1)) ./ (stringx(2)-stringx(1)));
-    if stringangle(2) < 0
-    stringangle(2) = pi + stringangle(2);
+    for j=2:3
+        stringangle(j) = atan((stringy(j)-stringy(j-1)) ./ (stringx(j)-stringx(j-1)));
+        if j==3
+            stringangle(j) = pi - stringangle(j); %hard code the angle tranfer, who cares, theres only ever 3 string nodes
+        end
     end
-    %Node n and Node N+1
-    stringangle(3) = atan((stringy(2)-stringy(3)) ./ (stringx(3)-stringx(2)));
-    stringangle(3) = 2*pi + stringangle(3); %string is in the fourth quadrant of the cartesian plane
+    
+    
+    StringLE = sqrt((stringy(3)-stringy(2))^2 + (stringx(3)-stringx(2))^2);
 
     % make garbage to fuck around with
-    Shit1 = zeros(3*(length(xfinal(1,:))+1),1); 
-    Shit2 = zeros(3*(length(xfinal(1,:))+1),1);
-    Shit3 = zeros(3*(length(xfinal(1,:))+1),1);
-    Shit4 = zeros(3*(length(xfinal(1,:))+1),1);
+    LoopU = zeros(3*(length(xfinal(1,:))+1),1); 
+    LoopUd = zeros(3*(length(xfinal(1,:))+1),1);
+    LoopUdd = zeros(3*(length(xfinal(1,:))+1),1);
+    LoopF = zeros(3*(length(xfinal(1,:))+1),1);
     
     ElementVec; % Makes a vector, elementVec(), with element lengths.
     CoefMaker; 
-    [G_K,G_C,G_M,Shit1,Shit2,Shit3,Shit4]= Sparse(G_K,G_C,G_M,Shit1,Shit2,Shit3,Shit4,indexcenternode);
-    MLDeleteMatrix(Shit1);
-    MLDeleteMatrix(Shit2);
-    MLDeleteMatrix(Shit3);
-    MLDeleteMatrix(Shit4);
+    [G_K,G_C,G_M,LoopU,LoopUd,LoopUdd,LoopF]= Sparse(G_K,G_C,G_M,LoopU,LoopUd,LoopUdd,LoopF,indexcenternode);
+    clearvars LoopU;
+    clearvars LoopUd;
+    clearvars LoopUdd;
+    clearvars LoopF;
     
 %     %Setup to make everything in the form Ax = B
 %     A = 1/dt^2*G_M + 1/(2*dt)*G_C; 
