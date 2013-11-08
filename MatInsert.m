@@ -24,10 +24,10 @@ function [G_K,local] = MatInsert(Global,angle,E,L,A,I,Node1,Node2)
     %   take local matrix and insert 
         Node1=Node1*3-2; 
         Node2=Node2*3-2;
-        Global(Node1:Node1+3-1,Node1:Node1+3-1)= local(1:3,1:3);
-        Global(Node2:Node2+3-1,Node2:Node2+3-1)= local(4:6,4:6);
-        Global(Node2:Node2+3-1,Node1:Node1+3-1)= local(1:3,4:6);
-        Global(Node1:Node1+3-1,Node2:Node2+3-1)= local(4:6,1:3);
+        Global(Node1:Node1+3-1,Node1:Node1+3-1)= Global(Node1:Node1+3-1,Node1:Node1+3-1)+local(1:3,1:3);
+        Global(Node2:Node2+3-1,Node2:Node2+3-1)= Global(Node2:Node2+3-1,Node2:Node2+3-1)+local(4:6,4:6);
+        Global(Node2:Node2+3-1,Node1:Node1+3-1)= Global(Node2:Node2+3-1,Node1:Node1+3-1)+local(1:3,4:6);
+        Global(Node1:Node1+3-1,Node2:Node2+3-1)= Global(Node1:Node1+3-1,Node2:Node2+3-1)+local(4:6,1:3);
         G_K=Global;
 end
 
