@@ -1,5 +1,4 @@
-function [] = Animation(setOfFinalXBow,setOfFinalYBow, ...
-setOfFinalXString, setOfFinalYString)
+function [] = Animation(setOfFinalXBow,setOfFinalYBow,thickness)
 
     figure(1);
     title('Bow and Arrow!','Color',[.6 0 0])
@@ -9,10 +8,13 @@ setOfFinalXString, setOfFinalYString)
     
 %     numOfLoop = length(setOfFinalXBow);
     
-    for i=1:(length(setOfFinalXBow)-1)
-        bow(i,1)=line(setOfFinalXBow(1,i:i+1),setOfFinalYBow(1,i:i+1),'color','blue','LineWidth',3);
-        if i<3
-            string(i,1)=line(setOfFinalXString(1,i:i+1),setOfFinalYString(1,i:i+1),'color','red','LineWidth',4);
+    for i=1:(length(setOfFinalXBow))
+        if i<length(setOfFinalxBow)
+            bow(i,1)=line(setOfFinalXBow(1,i:i+1),setOfFinalYBow(1,i:i+1),'color','blue','LineWidth',3);
+        else
+            X=[setOfFinalXBow(1,i) setOfFinalXBow(1,1)];
+            Y=[setOfFinalYBow(1,i) setOfFinalYBow(1,1)];
+            bow(i,1)=line(X,Y,'color','blue','LineWidth',3);
         end
     end
 % 
