@@ -24,9 +24,13 @@ Uminus = zeros(3*(length(xfinal(1,:))+1),1);
 F = zeros(3*(length(xfinal(1,:))+1),1);
 XAni = zeros(length(xfinal(1,:))+1, Flim); %X animation matrix
 YAni = zeros(length(xfinal(1,:))+1, Flim); %Y animation matrix
+StringLE = 0;
 
 %force input vector
 Fap = 0:Fslope*dt:Flim; 
+
+    CoefMaker; 
+    [G_K,G_C,G_M,LoopU,LoopUd,LoopUdd,LoopF]= Sparse(G_K,G_C,G_M,LoopU,LoopUd,LoopUdd,LoopF,indexcenternode);
 
 while failure == 0 && Fap(1,count+1) ~= Flim
     % Making Global matrices
@@ -64,6 +68,9 @@ while failure == 0 && Fap(1,count+1) ~= Flim
             stringangle(j) = pi - stringangle(j); %hard code the angle tranfer, who cares, theres only ever 3 string nodes
         end
     end
+    
+    
+    StringLE = sqrt((stringy(3)-stringy(2))^2 + (stringx(3)-stringx(2))^2);
 
     % make garbage to fuck around with
     LoopU = zeros(3*(length(xfinal(1,:))+1),1); 
@@ -74,10 +81,10 @@ while failure == 0 && Fap(1,count+1) ~= Flim
     ElementVec; % Makes a vector, elementVec(), with element lengths.
     CoefMaker; 
     [G_K,G_C,G_M,LoopU,LoopUd,LoopUdd,LoopF]= Sparse(G_K,G_C,G_M,LoopU,LoopUd,LoopUdd,LoopF,indexcenternode);
-    MLDeleteMatrix(LoopU);
-    MLDeleteMatrix(LoopUd);
-    MLDeleteMatrix(LoopUdd);
-    MLDeleteMatrix(LoopF);
+    clearvars LoopU;
+    clearvars LoopUd;
+    clearvars LoopUdd;
+    clearvars LoopF;
     
 %     %Setup to make everything in the form Ax = B
 %     A = 1/dt^2*G_M + 1/(2*dt)*G_C; 
