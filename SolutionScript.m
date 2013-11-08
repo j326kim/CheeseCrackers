@@ -24,7 +24,7 @@ Uminus = zeros(3*(length(xfinal(1,:))+1),1);
 F = zeros(3*(length(xfinal(1,:))+1),1);
 XAni = zeros(length(xfinal(1,:))+1, Flim); %X animation matrix
 YAni = zeros(length(xfinal(1,:))+1, Flim); %Y animation matrix
-StringLE = 0;
+StringLE = sqrt((stringy(3)-stringy(2))^2 + (stringx(3)-stringx(2))^2);
 
 %force input vector
 Fap = 0:Fslope*dt:Flim; 
