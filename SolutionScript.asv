@@ -58,12 +58,13 @@ while failure == 0 && Fap(1,count+1) ~= Flim
     stringy(3) = yfinal(length(yfinal));
 
     %update angle
-    for j=2:3
-        stringangle(j) = atan((stringy(j)-stringy(j-1)) ./ (stringx(j)-stringx(j-1)));
-        if j==3
-            stringangle(j) = pi - stringangle(j); %hard code the angle tranfer, who cares, theres only ever 3 string nodes
-        end
+    stringangle(2) = atan((stringy(2)-stringy(1)) ./ (stringx(2)-stringx(1)));
+    if stringangle(2) < 0
+    stringangle(2) = pi + stringangle(2);
     end
+    %Node n and Node N+1
+    stringangle(3) = atan((stringy(2)-stringy(3)) ./ (stringx(3)-stringx(2)));
+    stringangle(3) = 2*pi + stringangle(3); %string is in the fourth quadrant of the cartesian plane
 
     % make garbage to fuck around with
     Shit1 = zeros(3*(length(xfinal(1,:))+1),1); 
