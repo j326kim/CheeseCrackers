@@ -33,7 +33,7 @@ ElementVec;
 CoefMaker; 
 [G_K,G_C,G_M,Uplus,U,Uminus,F]= Sparse(G_K,G_C,G_M,Uplus,U,Uminus,F,indexcenternode);
 
-while failure == 0 && Fap(1,count+1) ~= Flim
+while failure == 0 || Fap(1,count+1) ~= Flim
     % Making Global matrices
     if count > 0
         for i = 1:(length(xfinal(1,:))-1)
