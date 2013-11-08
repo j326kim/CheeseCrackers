@@ -1,4 +1,4 @@
-E = xlsread('InputFile', 1, 'B2');
+% E = xlsread('InputFile', 1, 'B2');
 G_K = zeros(3*(length(xfinal)+1));
 G_C = zeros(3*(length(xfinal)+1));
 G_M = zeros(3*(length(xfinal)+1));
@@ -13,17 +13,21 @@ G_C = dampInsert(G_C,stringangle(2),l,A,1,length(yfinal)+1); %Node 1 and Node N+
 G_C = dampInsert(G_C,stringangle(3),l,A,length(yfinal)+1,length(yfinal)); %Node N+1 and Node N
 
 %manual insertion of point masses of string into mass matrix
-Imass=0.5*stringMass*(1.5875/2)^2;
-lyfinal=3*length(yfinal);
-G_M(1,1)=G_M(1,1)+stringMass;
-G_M(2,2)=G_M(2,2)+stringMass;
-G_M(3,3)=G_M(3,3)+Imass;
-G_M(lyfinal-2,lyfinal-2)=G_M(lyfinal-2,lyfinal-2)+2*stringMass;
-G_M(lyfinal-1,lyfinal-1)=G_M(lyfinal-1,lyfinal-1)+2*stringMass;
-G_M(lyfinal,lyfinal)=G_M(lyfinal,lyfinal)+2*Imass;
-G_M(lyfinal+1,lyfinal+1)=G_M(lyfinal+1,lyfinal+1)+stringMass;
-G_M(lyfinal+2,lyfinal+2)=G_M(lyfinal+2,lyfinal+2)+stringMass;
-G_M(lyfinal+3,lyfinal+3)=G_M(lyfinal+3,lyfinal+3)+Imass;
+%Imass=0.5*stringMass*(1.5875/2)^2;
+%lyfinal=3*length(yfinal);
+
+%G_M(1,1)=G_M(1,1)+stringMass;
+%G_M(2,2)=G_M(2,2)+stringMass;
+%G_M(3,3)=G_M(3,3)+Imass;
+%G_M(lyfinal-2,lyfinal-2)=G_M(lyfinal-2,lyfinal-2)+2*stringMass;
+%G_M(lyfinal-1,lyfinal-1)=G_M(lyfinal-1,lyfinal-1)+2*stringMass;
+%G_M(lyfinal,lyfinal)=G_M(lyfinal,lyfinal)+2*Imass;
+%G_M(lyfinal+1,lyfinal+1)=G_M(lyfinal+1,lyfinal+1)+stringMass;
+%G_M(lyfinal+2,lyfinal+2)=G_M(lyfinal+2,lyfinal+2)+stringMass;
+%G_M(lyfinal+3,lyfinal+3)=G_M(lyfinal+3,lyfinal+3)+Imass;
+
+G_M = DistributedMassMatrixMaker(G_M,1,length(yfinal)+1,p,A,l);
+G_M = DistributedMassMatrixMaker(G_M,length(yfinal)+1,length(yfinal),p,A,l);
 
 for i = 2:(length(xfinal))
     N1 = i-1;
@@ -37,6 +41,9 @@ for i = 2:(length(xfinal))
     G_C = dampInsert(G_C,Angle,L,A,N1,N2);
     G_M = DistributedMassMatrixMaker(G_M,N1,N2,p,A,L);
 end
+
+
+
 
 
 
