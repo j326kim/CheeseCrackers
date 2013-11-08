@@ -14,8 +14,6 @@ stringE = xlsread('InputFile', 1, 'H2'); %String modulus of elasticity
 stringD = xlsread('InputFile', 1, 'H6'); %String Radius
 failure = 0; %Failure flag; if failure condition is reached, set to 1
 count = 0; %Number of iterations the while loop has gone through.
-maxtension = xlsread('InputFile', 1, 'B8');
-maxcompression = xlsread('InputFile', 1, 'B10');
 
 
 %Initial setup; creates xfinal(), yfinal(), angles(), thickness()
@@ -104,11 +102,11 @@ while failure == 0 %|| Fap(1,count+1) ~= Flim
     U = Uplus; 
 %     
 %     %Check for failure
-     % failure = IsBroken( KeffMatrices, U, angles, length(xfinal), thickness, w, maxtension, maxcompression);
+      failure = IsBroken( KeffMatrices, U, angles, elementVec, thickness, w, maxtension, maxcompression);
 %  
 % 
-      count = count + 1;
-      if count> 50
-        failure = 1; %remove once IsBroken is done
-      end
+%       count = count + 1;
+%       if count> 5
+%         failure = 1; %remove once IsBroken is done
+     
 end
