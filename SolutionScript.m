@@ -67,10 +67,19 @@ while failure == 0 && Fap(1,count+1) ~= Flim
     stringangle(3) = atan((stringy(2)-stringy(3)) ./ (stringx(3)-stringx(2)));
     stringangle(3) = 2*pi + stringangle(3); %string is in the fourth quadrant of the cartesian plane
 
+    % make garbage to fuck around with
+    Shit1 = zeros(3*(length(xfinal(1,:))+1),1); 
+    Shit2 = zeros(3*(length(xfinal(1,:))+1),1);
+    Shit3 = zeros(3*(length(xfinal(1,:))+1),1);
+    Shit4 = zeros(3*(length(xfinal(1,:))+1),1);
     
     ElementVec; % Makes a vector, elementVec(), with element lengths.
     CoefMaker; 
-    [G_K,G_C,G_M,U,Uplus,Uminus,F]= Sparse(G_K,G_C,G_M,U,Uplus,Uminus,F,indexcenternode);
+    [G_K,G_C,G_M,Shit1,Shit2,Shit3,Shit4]= Sparse(G_K,G_C,G_M,Shit1,Shit2,Shit3,Shit4,indexcenternode);
+    MLDeleteMatrix(Shit1);
+    MLDeleteMatrix(Shit2);
+    MLDeleteMatrix(Shit3);
+    MLDeleteMatrix(Shit4);
     
 %     %Setup to make everything in the form Ax = B
 %     A = 1/dt^2*G_M + 1/(2*dt)*G_C; 
