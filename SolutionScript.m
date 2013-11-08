@@ -29,6 +29,7 @@ StringLE = 0;
 %force input vector
 Fap = 0:Fslope*dt:Flim; 
 
+ElementVec;
 CoefMaker; 
 [G_K,G_C,G_M,Uplus,U,Uminus,F]= Sparse(G_K,G_C,G_M,Uplus,U,Uminus,F,indexcenternode);
 
